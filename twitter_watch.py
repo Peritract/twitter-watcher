@@ -21,7 +21,7 @@ if __name__ == "__main__":
     API = tweepy.API(auth)
 
     # Instantiate the Tweet handler
-    watcher = Watcher(API, ["#IWD2020"])
+    watcher = Watcher(API, ["#maga"])
 
     stream = tweepy.Stream(auth=API.auth, listener=watcher,
                            tweet_mode='extended')  # Start watching the stream
