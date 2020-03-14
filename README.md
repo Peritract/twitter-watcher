@@ -34,7 +34,7 @@ You can edit the recorded fields in the `watcher.py` file.
 
 `python twitter_watch.py`
 
-As written, the code only writes to the database. Change the `out_type` parameter of the watcher object to "file" or "both" to start sending data to a file.
+As written, the code only writes to a file. Change the `out_type` parameter of the watcher object to "db" or "both" to start sending data to a database. This can be seen in the `heroku` branch of  the repository.
 
 ## Deploy
 
@@ -59,5 +59,4 @@ This can be seen in the `heroku` branch of this repository.
 
 ## Planned development
 
-- Add the option to write to a remote database
 - Allow easier customisation of written values and search terms
