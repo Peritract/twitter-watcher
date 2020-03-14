@@ -10,7 +10,7 @@ class Watcher(tweepy.StreamListener):
 
     API - an authorised Tweepy API object
     filter_list - a list of search strings
-    connection - an ibm_db connection object
+    connection - a credentials string for an IBM DB2 database
     out - a name for the outfile/table
     out_type - a string describing where the results should be sent: 'file', 'db', or 'both'
     """
@@ -66,10 +66,13 @@ class Watcher(tweepy.StreamListener):
         """
         Create the database table.
         """
-        
+
+        # Connect to the database
+        connection = db.connect(self.connection, "", "")
+
         # Check if the table exists.
         sql = f"SELECT name FROM SYSIBM.SYSTABLES WHERE type = 'T' AND name = '{self.out.upper()}';"
-        tweets_table = db.fetch_tuple(db.exec_immediate(self.connection, sql))
+        tweets_table = db.fetch_tuple(db.exec_immediate(connection, sql))
 
         # If the table doesn't exist, create it.
         if not tweets_table:
@@ -81,19 +84,25 @@ class Watcher(tweepy.StreamListener):
                 verified BOOLEAN NOT NULL,
                 source VARCHAR(150) NOT NULL
                 );"""
-            db.exec_immediate(self.connection, sql)
+            db.exec_immediate(connection, sql)
+        
+        # Close the connection
+        db.close(connection)
 
     def write_to_db(self, data):
         """
         Stores a prepared status on the cloud.
         """
 
+        # Connect to the database
+        connection = db.connect(self.connection, "", "")
+
         # Create the statement
         sql = f"""INSERT INTO {self.out.upper()} (text, author, created_at,
                   verified, source) VALUES ({"?, " * len(data)}"""[:-2] + ");"
 
         # Add the relevant values to the statement
-        stmt = db.prepare(self.connection, sql)
+        stmt = db.prepare(connection, sql)
 
         # Loop through the data, binding each to the statement
         for x in range(1, len(data) + 1):
@@ -101,6 +110,9 @@ class Watcher(tweepy.StreamListener):
         
         # Actually write to the database
         result = db.execute(stmt)
+
+        # Close the connection
+        db.close(connection)
 
     def write_to_file(self, data):
         """
