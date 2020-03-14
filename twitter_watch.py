@@ -23,7 +23,7 @@ if __name__ == "__main__":
     API = tweepy.API(auth)
 
     # Instantiate the Tweet handler
-    watcher = Watcher(API, ["#datascience"], connection=DB_CONNECTION, out="datascience_tweets", out_type="db")
+    watcher = Watcher(API, ["#datascience"], connection=DB_CONNECTION, out="datascience_tweets", out_type="file")
 
     stream = tweepy.Stream(auth=API.auth, listener=watcher,
                            tweet_mode='extended')  # Start watching the stream
