@@ -59,5 +59,4 @@ This can be seen in the `heroku` branch of this repository.
 
 ## Planned development
 
-- Add the option to write to a remote database
 - Allow easier customisation of written values and search terms
