@@ -40,6 +40,23 @@ As written, the code only writes to the database. Change the `out_type` paramete
 
 This should deploy relatively easily to Heroku, so that it can be run independently of any specific machine.
 
+Heroku plays poorly with `dotenv`, so replace
+
+```python
+import dotenv
+```
+
+and
+
+```python
+# Access a .env file
+load_dotenv()
+```
+
+in the `twitter_watch.py` file with nothing at all, removing `dotenv` from the `requirements.txt` file as well.
+
+This can be seen in the `heroku` branch of this
+
 ## Planned development
 
 - Add the option to write to a remote database
