@@ -1,1 +1,1 @@
-worker: python writing-robot.py
+worker: python twitter_watch.py
