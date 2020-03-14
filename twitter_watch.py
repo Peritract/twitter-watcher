@@ -22,12 +22,8 @@ if __name__ == "__main__":
 
     API = tweepy.API(auth)
 
-    # Connect to the IBM database instance
-
-    CONN = db.connect(DB_CONNECTION, "", "")
-
     # Instantiate the Tweet handler
-    watcher = Watcher(API, ["#maga"], connection=CONN, out="tweets", out_type="file")
+    watcher = Watcher(API, ["#maga"], connection=DB_CONNECTION, out="tweets", out_type="file")
 
     stream = tweepy.Stream(auth=API.auth, listener=watcher,
                            tweet_mode='extended')  # Start watching the stream
