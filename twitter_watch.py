@@ -1,9 +1,13 @@
 import tweepy
 import ibm_db as db
+from dotenv import load_dotenv
 from os import getenv
 from watcher import Watcher
 
 if __name__ == "__main__":
+
+    # Access a .env file
+    load_dotenv()
 
     # Load in environment variables
     C_KEY = getenv('C_KEY')
@@ -19,7 +23,7 @@ if __name__ == "__main__":
     API = tweepy.API(auth)
 
     # Instantiate the Tweet handler
-    watcher = Watcher(API, ["#datascience"], connection=CONN, out="datascience_tweets", out_type="db")
+    watcher = Watcher(API, ["#datascience"], connection=DB_CONNECTION, out="datascience_tweets", out_type="db")
 
     stream = tweepy.Stream(auth=API.auth, listener=watcher,
                            tweet_mode='extended')  # Start watching the stream
