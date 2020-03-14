@@ -55,7 +55,9 @@ load_dotenv()
 
 in the `twitter_watch.py` file with nothing at all, removing `dotenv` from the `requirements.txt` file as well.
 
-This can be seen in the `heroku` branch of this repository.
+Set the `.env` values as config vars in Heroku.
+
+The above changes can all be seen in the `heroku` branch of this repository.
 
 ## Planned development
 
