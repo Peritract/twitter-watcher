@@ -91,8 +91,6 @@ class Watcher(tweepy.StreamListener):
         # Create the statement
         sql = f"""INSERT INTO {self.out.upper()} (text, author, created_at,
                   verified, source) VALUES ({"?, " * len(data)}"""[:-2] + ");"
-        
-        print(sql)
 
         # Add the relevant values to the statement
         stmt = db.prepare(self.connection, sql)
@@ -103,8 +101,6 @@ class Watcher(tweepy.StreamListener):
         
         # Actually write to the database
         result = db.execute(stmt)
-
-        print(result)
 
     def write_to_file(self, data):
         """
