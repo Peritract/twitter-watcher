@@ -1,4 +1,5 @@
 import tweepy
+import ibm_db as db
 from dotenv import load_dotenv
 from os import getenv
 from watcher import Watcher
@@ -13,6 +14,7 @@ if __name__ == "__main__":
     C_SECRET = getenv('C_SECRET')
     A_TOKEN = getenv('A_TOKEN')
     A_SECRET = getenv('A_SECRET')
+    DB_CONNECTION = getenv("DB_CONNECTION")
 
     # Authorise with the Twitter API
     auth = tweepy.OAuthHandler(C_KEY, C_SECRET)
@@ -20,8 +22,12 @@ if __name__ == "__main__":
 
     API = tweepy.API(auth)
 
+    # Connect to the IBM database instance
+
+    CONN = db.connect(DB_CONNECTION, "", "")
+
     # Instantiate the Tweet handler
-    watcher = Watcher(API, ["#maga"])
+    watcher = Watcher(API, ["#maga"], connection=CONN, out="tweets", out_type="file")
 
     stream = tweepy.Stream(auth=API.auth, listener=watcher,
                            tweet_mode='extended')  # Start watching the stream
