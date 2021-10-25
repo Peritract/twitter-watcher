@@ -37,4 +37,4 @@ class Watcher(Stream):
                 "created_at": status["created_at"]
             }
 
-            self.write_to_db(status)
+            self.write_to_db(doc)
