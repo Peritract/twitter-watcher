@@ -4,61 +4,38 @@ This program collects tweets for a provided search term and writes them to a .cs
 
 ## Requirements
 
-```python
-tweepy
-dotenv
-ibm_db
-```
+See [requirements.txt](./requirements.txt), but basically `Tweepy` and `PyMongo`.
 
 ## Set up
 
-You need a .env file containing the following variables
+You need a .env file containing the several variables; sensible defaults are left where possible.
 
 ```python
 C_KEY=XXXXXXXXXX
 C_SECRET=XXXXXXXXXX
 A_TOKEN=XXXXXXXXXX
 A_SECRET=XXXXXXXXXX
-DB_CONNECT=XXXXXXXXXX
+DB_USER=XXXXXXXXXX
+DB_PASSWORD=XXXXXXXXXX
+DB_CLUSTER=XXXXXXXXXX
+DB_NAME=tweets
+DB_COLLECTION=XXXXXXXXXX
+SEARCH_TERMS=XXXXXXXXXX
+LANGUAGES=en
 ```
 
-Find the specific values to fill the first four gaps on your Twitter developer account. Get the `DB_CONNECT`value from an IBM Cloud DB2 instance's service credentials (the `ssldsn` parameter).
+The first four should be filled with the values from a Twitter developer account. The remainder should be filled with the details for a MongoDB instance, and with the details of tweets that you're interested in.
 
 ## Customisation
 
-You can edit the search term in the `twitter_watch.py` file.
-
-You can edit the recorded fields in the `watcher.py` file.
+To search for different tweets, or different languages, edit the environment variables. Both `SEARCH_TERMS` and `LANGUAGES` accept a single value or a comma-separated list.
 
 ## Run
 
-`python twitter_watch.py`
+`python app.py`
 
-As written, the code only writes to a file. Change the `out_type` parameter of the watcher object to "db" or "both" to start sending data to a database. This can be seen in the `heroku` branch of  the repository.
-
-## Deploy
+## Deployment
 
 This should deploy relatively easily to Heroku, so that it can be run independently of any specific machine.
 
-Heroku plays poorly with `dotenv`, so replace
-
-```python
-import dotenv
-```
-
-and
-
-```python
-# Access a .env file
-load_dotenv()
-```
-
-in the `twitter_watch.py` file with nothing at all, removing `dotenv` from the `requirements.txt` file as well.
-
 Set the `.env` values as config vars in Heroku.
-
-The above changes can all be seen in the `heroku` branch of this repository.
-
-## Planned development
-
-- Allow easier customisation of written values and search terms
