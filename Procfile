@@ -1,1 +1,1 @@
-worker: python twitter_watch.py
+worker: python app.py

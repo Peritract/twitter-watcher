@@ -37,4 +37,8 @@ class Watcher(Stream):
                 "created_at": status["created_at"]
             }
 
+            # Just to check
+            print(doc['text'])
+
+            # Store it
             self.write_to_db(doc)
