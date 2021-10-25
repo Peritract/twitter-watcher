@@ -21,6 +21,8 @@ if __name__ == "__main__":
                       getenv('DB_NAME'),
                       getenv("DB_COLLECTION"))
 
+    print("App running...")
+
     watcher.filter(track=getenv("SEARCH_TERMS").split(","),
                    threaded=True,
                    languages=getenv("LANGUAGES").split(","))
